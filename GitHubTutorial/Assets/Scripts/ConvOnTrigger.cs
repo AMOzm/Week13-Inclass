@@ -10,6 +10,7 @@ public class ConvOnTrigger : MonoBehaviour
     [SerializeField] private GameObject DialogueCanvas;
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private TMP_Text NameText;
+    // different strings of text for different needs
     [SerializeField] private string GirlText;
     [SerializeField] private string GirlTextKey;
     [SerializeField] private string GirlTextNothing;
@@ -64,41 +65,46 @@ public class ConvOnTrigger : MonoBehaviour
             // Enable the canvas
             if (DialogueCanvas != null)
             {
+                //what happens when collide with girl before getting key
                 DialogueCanvas.SetActive(true);
                 if(hasKey == false){
                 dialogueText.text = GirlText;
                 NameText.text = GirlName;
                 }
+                //what happens when collide with girl after getting key but before opening gate
                 if(hasKey == true){
                 dialogueText.text = GirlTextKey;
                 NameText.text = GirlName;
                 }
+                //what happens after opening gate.
                 if(gateOpen == true){
                 dialogueText.text = GirlTextNothing;
                 NameText.text = GirlName;
                 }
             }
         }
-
+        //what happens on collide with tree object
         if(other.CompareTag("Trees"))
         {
             Debug.Log("Tree!");
             if (spriteRenderer != null)
             {
-                spriteRenderer.sortingOrder = changeSortingLayerto; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerto; // change sorting layer of player to make it hide behind tree
             }
         }
+        //what happens on collide with special exit tree object
         if(other.CompareTag("TreeExit"))
         {
             Debug.Log("Exit!");
             if (spriteRenderer != null)
             {
-                spriteRenderer.sortingOrder = changeSortingLayerto; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerto; // change sorting layer of player to make it hide behind tree
             }
             if(ExitOpen == true){
                 SceneManager.LoadScene(0);
             }
         }
+        //what happens on collide with gate object
         if (other.CompareTag("Gate"))
         {
             Debug.Log("Gate!");
@@ -112,19 +118,21 @@ public class ConvOnTrigger : MonoBehaviour
             Key.SetActive(false);
             gateOpen = true;
         }
+        //what happens on collide with chest object
         if (other.CompareTag("Chest"))
         {
             Debug.Log("Chest!");
 
-            // Change the sprite of the Gate object
+            // Change the sprite of the chest object
             SpriteRenderer chestSpriteRenderer = other.GetComponent<SpriteRenderer>();
             if (chestSpriteRenderer != null && ChestOpenSprite != null)
             {
-                chestSpriteRenderer.sprite = ChestOpenSprite; // Change the sprite of the Gate object
+                chestSpriteRenderer.sprite = ChestOpenSprite; 
             }
             // Enable the canvas
             if (DialogueCanvas != null)
             {
+                //show dialogue from the chest
                 DialogueCanvas.SetActive(true);
                 dialogueText.text = ChestText;
                 NameText.text = ChestName;
@@ -133,6 +141,7 @@ public class ConvOnTrigger : MonoBehaviour
 
             }
         }
+        //what happens when player hits key, key gets "picked up", born as child of player object
         if (other.CompareTag("Key"))
         {
             Debug.Log("Key!");
@@ -158,14 +167,14 @@ public class ConvOnTrigger : MonoBehaviour
         {
             if (spriteRenderer != null)
             {
-                spriteRenderer.sortingOrder = changeSortingLayerback; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerback; //move plyaer sorting layer back to make it visible
             }
         }
         if(other.CompareTag("TreeExit"))
         {
             if (spriteRenderer != null)
             {
-                spriteRenderer.sortingOrder = changeSortingLayerback; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerback; //move plyaer sorting layer back to make it visible
             }
         }
         if (other.CompareTag("Chest"))
@@ -181,6 +190,7 @@ public class ConvOnTrigger : MonoBehaviour
     {
         if (dialogueText != null)
         {
+            //change dialogue to the next sentence
             dialogueText.text = ChestTextCont;
         }
     }

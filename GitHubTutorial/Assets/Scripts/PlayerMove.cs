@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]private Vector2 playerMove;
     [SerializeField] private float moveSpd;
 
+    //reference to the player and the position of the player object
     private GameObject player;
     private Transform playerTransform;
     private Vector2 playerPos;
@@ -21,7 +22,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]private float upBarrier;
     [SerializeField]private float downBarrier;
 
-    //to animate playermovement
+    //to animate playermovement and idle stage
     [SerializeField]private Animator playerAnimator;
     private float HorizontalMovement;
     private float VerticalMovement;
@@ -118,7 +119,7 @@ public class PlayerMove : MonoBehaviour
         // Normalize the movement vector to avoid faster diagonal movement
         playerMove.Normalize();
 
-        // Apply movement
+        // Apply the movement
         playerPos = playerTransform.position + (Vector3)(playerMove * moveSpd * Time.deltaTime);
         playerTransform.position = playerPos;
 
@@ -127,25 +128,25 @@ public class PlayerMove : MonoBehaviour
     {
         if (playerMove == Vector2.zero && mDown)
         {
-        // No movement input, set to idle
+        // No movement input, set to idle with down sprite
             playerAnimator.Play("KiIdle");
             mDown = false;
         }
         if (playerMove == Vector2.zero && mUp)
         {
-        // No movement input, set to idle
+        // No movement input, set to idle with up sprite
             playerAnimator.Play("KiIdleUp");
             mUp = false;
         }
         if (playerMove == Vector2.zero && mLeft)
         {
-        // No movement input, set to idle
+        // No movement input, set to idle with left sprite
             playerAnimator.Play("KiIdleLeft");
             mLeft = false;
         }
         if (playerMove == Vector2.zero && mRight)
         {
-        // No movement input, set to idle
+        // No movement input, set to idle with right sprite
             playerAnimator.Play("KiIdleRight");
             mRight = false;
         }
