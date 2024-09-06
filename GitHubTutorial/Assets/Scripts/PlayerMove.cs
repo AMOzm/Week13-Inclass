@@ -25,6 +25,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField]private Animator playerAnimator;
     private float HorizontalMovement;
     private float VerticalMovement;
+    private bool mUp;
+    private bool mDown;
+    private bool mLeft;
+    private bool mRight;
     
     // Start is called before the first frame update
     void Start()
@@ -50,27 +54,60 @@ public class PlayerMove : MonoBehaviour
 
     void GetPlayerInput(){
           playerMove = Vector2.zero;
+            bool moveLeft = Input.GetKey(KeyCode.A) && playerTransform.position.x > leftBarrier;
+            bool moveRight = Input.GetKey(KeyCode.D) && playerTransform.position.x < rightBarrier;
+            bool moveUp = Input.GetKey(KeyCode.W) && playerTransform.position.y < upBarrier;
+            bool moveDown = Input.GetKey(KeyCode.S) && playerTransform.position.y > downBarrier;
+
+            if (moveLeft && moveRight) moveLeft = moveRight = false; //cancels horizontal movement
+            if (moveUp && moveDown) moveUp = moveDown = false; //cancels vertical movement
+
+
 
         // Check for input and update movement vector
-        if (Input.GetKey(KeyCode.A) && playerTransform.position.x > leftBarrier)
+        if (moveLeft)
         {
             playerMove.x = -1;
-            playerAnimator.Play("KiLeft");
+            if(moveUp){
+                playerAnimator.Play("KiUp");
+                mUp = true;
+            }
+            else if(moveDown){
+                playerAnimator.Play("KiDown");
+                mDown = true;
+            }
+            else{
+                playerAnimator.Play("KiLeft");
+                mLeft = true;
+            }
         }
-        if (Input.GetKey(KeyCode.D) && playerTransform.position.x < rightBarrier)
+        if (moveRight)
         {
             playerMove.x = 1;
+            if(moveUp){
+                playerAnimator.Play("KiUp");
+                mUp = true;
+            }
+            else if(moveDown){
+                playerAnimator.Play("KiDown");
+                mDown = true;
+            }
+            else{
             playerAnimator.Play("KiRight");
+            mRight = true;
+            }
         }
-        if (Input.GetKey(KeyCode.W) && playerTransform.position.y < upBarrier)
+        if (moveUp)
         {
             playerMove.y = 1;
             playerAnimator.Play("KiUp");
+            mUp = true;
         }
-        if (Input.GetKey(KeyCode.S) && playerTransform.position.y > downBarrier)
+        if (moveDown)
         {
             playerMove.y = -1;
             playerAnimator.Play("KiDown");
+            mDown = true;
         }
         // else{
         //     playerMove.x = 0;
@@ -88,10 +125,29 @@ public class PlayerMove : MonoBehaviour
     }
     void UpdateAnimator()
     {
-        if (playerMove == Vector2.zero)
+        if (playerMove == Vector2.zero && mDown)
         {
         // No movement input, set to idle
             playerAnimator.Play("KiIdle");
+            mDown = false;
+        }
+        if (playerMove == Vector2.zero && mUp)
+        {
+        // No movement input, set to idle
+            playerAnimator.Play("KiIdleUp");
+            mUp = false;
+        }
+        if (playerMove == Vector2.zero && mLeft)
+        {
+        // No movement input, set to idle
+            playerAnimator.Play("KiIdleLeft");
+            mLeft = false;
+        }
+        if (playerMove == Vector2.zero && mRight)
+        {
+        // No movement input, set to idle
+            playerAnimator.Play("KiIdleRight");
+            mRight = false;
         }
     }
 }

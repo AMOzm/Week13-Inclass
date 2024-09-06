@@ -11,6 +11,8 @@ public class ConvOnTrigger : MonoBehaviour
     [SerializeField] private TMP_Text dialogueText;
     [SerializeField] private TMP_Text NameText;
     [SerializeField] private string GirlText;
+    [SerializeField] private string GirlTextKey;
+    [SerializeField] private string GirlTextNothing;
     [SerializeField] private string GirlName;
     [SerializeField] private string ChestText;
     [SerializeField] private string ChestTextCont;
@@ -23,8 +25,11 @@ public class ConvOnTrigger : MonoBehaviour
     [SerializeField] private Sprite ChestOpenSprite;
     [SerializeField] private GameObject Key;
     [SerializeField] private bool hasKey;
+    [SerializeField] private bool gateOpen;
     [SerializeField] private bool ExitOpen;
     [SerializeField] private Collider2D gate;
+    [SerializeField] private int changeSortingLayerto;
+    [SerializeField] private int changeSortingLayerback;
     
 
     private void Start()
@@ -60,8 +65,18 @@ public class ConvOnTrigger : MonoBehaviour
             if (DialogueCanvas != null)
             {
                 DialogueCanvas.SetActive(true);
+                if(hasKey == false){
                 dialogueText.text = GirlText;
                 NameText.text = GirlName;
+                }
+                if(hasKey == true){
+                dialogueText.text = GirlTextKey;
+                NameText.text = GirlName;
+                }
+                if(gateOpen == true){
+                dialogueText.text = GirlTextNothing;
+                NameText.text = GirlName;
+                }
             }
         }
 
@@ -70,7 +85,7 @@ public class ConvOnTrigger : MonoBehaviour
             Debug.Log("Tree!");
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = false; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerto; // Disable the sprite renderer to make it invisible
             }
         }
         if(other.CompareTag("TreeExit"))
@@ -78,10 +93,10 @@ public class ConvOnTrigger : MonoBehaviour
             Debug.Log("Exit!");
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = false; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerto; // Disable the sprite renderer to make it invisible
             }
             if(ExitOpen == true){
-                SceneManager.LoadScene(1);
+                SceneManager.LoadScene(0);
             }
         }
         if (other.CompareTag("Gate"))
@@ -95,6 +110,7 @@ public class ConvOnTrigger : MonoBehaviour
                 gateSpriteRenderer.sprite = newGateSprite; // Change the sprite of the Gate object
             }
             Key.SetActive(false);
+            gateOpen = true;
         }
         if (other.CompareTag("Chest"))
         {
@@ -142,14 +158,14 @@ public class ConvOnTrigger : MonoBehaviour
         {
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = true; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerback; // Disable the sprite renderer to make it invisible
             }
         }
         if(other.CompareTag("TreeExit"))
         {
             if (spriteRenderer != null)
             {
-                spriteRenderer.enabled = true; // Disable the sprite renderer to make it invisible
+                spriteRenderer.sortingOrder = changeSortingLayerback; // Disable the sprite renderer to make it invisible
             }
         }
         if (other.CompareTag("Chest"))
