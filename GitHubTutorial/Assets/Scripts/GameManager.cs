@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public static GameManager FindInstance(){
         return instance;
     }
+    [SerializeField] private GameObject startCanvas;
+    [SerializeField] private GameObject player;
+
 
     
     void awake(){
@@ -32,22 +35,26 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
+       startCanvas.SetActive(true);
+       player.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-    }
+       if(Input.GetKeyDown(KeyCode.Space)){
+            startCanvas.SetActive(false);
+            player.SetActive(true);
+        }
 
    
-}
+    }
 
 public class Helper{
 
 
     public void TestFunction(){
         Debug.Log("Helper class called");
+        }
     }
 }

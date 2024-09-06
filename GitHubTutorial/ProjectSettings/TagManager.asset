@@ -8,6 +8,12 @@ TagManager:
   - CardTwo
   - CardThree
   - PlayerOne
+  - Guest
+  - Trees
+  - Gate
+  - Chest
+  - TreeExit
+  - Key
   layers:
   - Default
   - TransparentFX
