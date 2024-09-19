@@ -28,9 +28,11 @@ public class ConvOnTrigger : MonoBehaviour
     [SerializeField] private bool hasKey;
     [SerializeField] private bool gateOpen;
     [SerializeField] private bool ExitOpen;
+    [SerializeField] private bool TimerVer;
     [SerializeField] private Collider2D gate;
     [SerializeField] private int changeSortingLayerto;
     [SerializeField] private int changeSortingLayerback;
+    public GameObject[] gameObjects = new GameObject[5];
     
 
     private void Start()
@@ -42,6 +44,18 @@ public class ConvOnTrigger : MonoBehaviour
         }
     
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (gameObjects.Length == 5)
+        {
+            // Select a random index from 0 to 5
+            int randomIndex = Random.Range(0, gameObjects.Length);
+
+            // Set the tag of the randomly selected object to "Exit"
+            gameObjects[randomIndex].tag = "TreeExit";
+        }
+        else
+        {
+            Debug.LogError("Array must contain exactly 6 GameObjects.");
+        }
     }
     private void Update()
     {
@@ -101,7 +115,10 @@ public class ConvOnTrigger : MonoBehaviour
                 spriteRenderer.sortingOrder = changeSortingLayerto; // change sorting layer of player to make it hide behind tree
             }
             if(ExitOpen == true){
-                SceneManager.LoadScene(0);
+                SceneManager.LoadScene(2);
+            }
+            if(TimerVer == true){
+                SceneManager.LoadScene(2);
             }
         }
         //what happens on collide with gate object
