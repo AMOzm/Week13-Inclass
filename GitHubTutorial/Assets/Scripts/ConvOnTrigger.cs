@@ -46,10 +46,10 @@ public class ConvOnTrigger : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (gameObjects.Length == 5)
         {
-            // Select a random index from 0 to 5
+            // Select random index from 0 to 5
             int randomIndex = Random.Range(0, gameObjects.Length);
 
-            // Set the tag of the randomly selected object to "Exit"
+            // Set tag of the randomly selected object to "Exit"
             gameObjects[randomIndex].tag = "TreeExit";
         }
         else
