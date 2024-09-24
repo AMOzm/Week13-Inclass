@@ -14,6 +14,8 @@ TagManager:
   - Chest
   - TreeExit
   - Key
+  - Ghost
+  - Wall
   layers:
   - Default
   - TransparentFX

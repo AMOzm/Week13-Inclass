@@ -7,25 +7,27 @@ using Unity.VisualScripting;
 
 public class GameManager : MonoBehaviour
 {
-    private static GameManager instance;
+    public static GameManager Instance;
 
-    public static GameManager FindInstance(){
-        return instance;
-    }
     // [SerializeField] private GameObject startCanvas;
     // [SerializeField] private GameObject player;
-
+    public int SceneReloadCount { get; set; }
+    public AudioSource BGM;  
+    public AudioSource Rque;
+    public AudioSource Wque;
+    
+    public bool musicStarted = false;
 
     
-    void awake(){
-        if (instance != null && instance != this)
+    void Awake(){
+        if (Instance == null)
         {
-            Destroy(this);
+            DontDestroyOnLoad(gameObject);
+            Instance = this;
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
 
         //Debug.Log("Current Loop: " + cycleCount);

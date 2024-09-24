@@ -39,6 +39,6 @@ public class AccDecButtons : MonoBehaviour
     void UpdateDisplayText()
     {
         // Update the text to show the current value of the counter
-        displayText.text = "Counter: " + counter.ToString();
+        // displayText.text = "Counter: " + counter.ToString();
     }
 }
